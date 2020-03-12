@@ -1,0 +1,29 @@
+.main-view-container {
+  margin: 2%;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: row;
+  height: 100%;
+}
+
+.left-column {
+  flex: 0 1 48%;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #61dafb;
+}
+
+.right-column {
+  flex: 0 1 48%;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #61dafb;
+  border-left-width: 0;
+}
+
+.column-title {
+  font-size: large;
+  font-weight: 700;
+  border-bottom: 1px solid #61dafb;
+  height: 30px;
+}

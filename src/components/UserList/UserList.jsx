@@ -15,7 +15,7 @@ const UserList = (props) => {
                 </div>
             </div>
             {props.users && props.users.map((u) =>
-                <div key={u.id} className="list-group-item" onClick={props.onUserSelect}>
+                <div key={u.id} className="list-group-item user" onClick={() => props.onUserSelect(u.id)}>
                     {u.name}
                 </div>
             )}

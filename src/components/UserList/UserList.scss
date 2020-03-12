@@ -1,0 +1,17 @@
+.top-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+}
+
+.new-user-button {
+  margin: auto;
+  flex: 0 1 auto;
+  width: 30%;
+}
+
+.user-search-box {
+  margin-top: 2vmin;
+  flex: 0 1 auto;
+}

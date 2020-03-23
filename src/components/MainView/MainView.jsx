@@ -14,24 +14,62 @@ const initialUsers = [
             country: "Poland"
         }
     },
-    {id: 2, name: "Jan Mroczek", email: "jan.mroczek@gmail.com", password: "123456", address: {
+    {
+        id: 2, name: "Jan Mroczek", email: "jan.mroczek@gmail.com", password: "123456", address: {
             street: "Main Street 154/12",
             zipCode: "X509",
             city: "Malahide",
             country: "Ireland"
-        }}
+        }
+    }
 ];
+
+const NEW_USER = {
+    name: '',
+    email: '',
+    password: '',
+    address: {street: '', zipCode: '', city: '', country: ''}
+}
 
 const MainView = () => {
     const [users, setUsers] = useState(initialUsers);
-    const [selectedUser, setSelectedUser] = useState({})
+    const [selectedUser, setSelectedUser] = useState(NEW_USER)
+    const [isNewUser, setIsNewUser] = useState(true);
 
-    const addUser = () => {
-
-    }
 
     const selectUser = (userId) => {
+        setIsNewUser(false)
         setSelectedUser(_.find(users, {id: userId}))
+    }
+
+    const handleNewUserButtonClick = () => {
+        setIsNewUser(true);
+        setSelectedUser(NEW_USER)
+    }
+
+    const saveNewUser = (newUser) => {
+        newUser.id = users.length + 1
+        setUsers([...users, newUser])
+        setIsNewUser(false);
+        setSelectedUser(newUser)
+    }
+
+    const updateUser = (userToUpdate) => {
+        const updatedUsers = [...users]
+        updatedUsers[userToUpdate.id - 1] = userToUpdate
+        setUsers(updatedUsers)
+    }
+
+    const saveUser = (userToSave) => {
+        if (isNewUser) {
+            saveNewUser(userToSave)
+        } else {
+            updateUser(userToSave)
+        }
+    }
+
+    const onSelectedUserChange = (user) => {
+        setSelectedUser(user)
     }
 
     return (
@@ -40,14 +78,14 @@ const MainView = () => {
                 <div className="column-title">
                     User List
                 </div>
-                <UserList users={users} onNewUser={() => console.log("New User")}
-                          onUserSelect={selectUser}/>
+                <UserList users={users} onNewUser={handleNewUserButtonClick} onUserSelect={selectUser}/>
             </div>
             <div className="right-column">
                 <div className="column-title">
-                    User Details
+                    {isNewUser ? "New User" : "User Details"}
                 </div>
-                <UserDetails user={selectedUser}/>
+
+                <UserDetails user={selectedUser} onChange={onSelectedUserChange} onSave={saveUser}/>
             </div>
         </div>
     );

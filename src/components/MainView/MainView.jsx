@@ -1,28 +1,10 @@
-import React, {useState} from 'react';
+import React, {Component} from 'react';
 import _ from 'lodash'
-
 import UserList from "../UserList/UserList";
 import "./MainView.scss"
 import UserDetails from "../UserDetails/UserDetails";
+import userService from "../../services/userService";
 
-const initialUsers = [
-    {
-        id: 1, name: "Michal Kapiczynski", email: "email@gmail.com", password: "123", address: {
-            street: "Nowa 13",
-            zipCode: "13-154",
-            city: "Warsaw",
-            country: "Poland"
-        }
-    },
-    {
-        id: 2, name: "Jan Mroczek", email: "jan.mroczek@gmail.com", password: "123456", address: {
-            street: "Main Street 154/12",
-            zipCode: "X509",
-            city: "Malahide",
-            country: "Ireland"
-        }
-    }
-];
 
 const NEW_USER = {
     name: '',
@@ -31,64 +13,100 @@ const NEW_USER = {
     address: {street: '', zipCode: '', city: '', country: ''}
 }
 
-const MainView = () => {
-    const [users, setUsers] = useState(initialUsers);
-    const [selectedUser, setSelectedUser] = useState(NEW_USER)
-    const [isNewUser, setIsNewUser] = useState(true);
-
-
-    const selectUser = (userId) => {
-        setIsNewUser(false)
-        setSelectedUser(_.find(users, {id: userId}))
-    }
-
-    const handleNewUserButtonClick = () => {
-        setIsNewUser(true);
-        setSelectedUser(NEW_USER)
-    }
-
-    const saveNewUser = (newUser) => {
-        newUser.id = users.length + 1
-        setUsers([...users, newUser])
-        setIsNewUser(false);
-        setSelectedUser(newUser)
-    }
-
-    const updateUser = (userToUpdate) => {
-        const updatedUsers = [...users]
-        updatedUsers[userToUpdate.id - 1] = userToUpdate
-        setUsers(updatedUsers)
-    }
-
-    const saveUser = (userToSave) => {
-        if (isNewUser) {
-            saveNewUser(userToSave)
-        } else {
-            updateUser(userToSave)
+class MainView extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            users: [],
+            selectedUser: NEW_USER,
+            isNewUser: true
         }
     }
 
-    const onSelectedUserChange = (user) => {
-        setSelectedUser(user)
+    componentWillMount() {
+        console.log('Will mount')
+        userService.fetchUsers().then((users) => {
+            this.setState({
+                ...this.state,
+                users: [...users]
+            })
+        })
     }
 
-    return (
-        <div className="main-view-container container-fluid">
-            <div className="left-column">
-                <div className="column-title">
-                    User List
-                </div>
-                <UserList users={users} onNewUser={handleNewUserButtonClick} onUserSelect={selectUser}/>
-            </div>
-            <div className="right-column">
-                <div className="column-title">
-                    {isNewUser ? "New User" : "User Details"}
-                </div>
+    selectUser = (userId) => {
+        this.setState({
+            ...this.state,
+            isNewUser: false,
+            selectedUser: _.find(this.state.users, {id: userId})
+        })
+    }
 
-                <UserDetails user={selectedUser} onChange={onSelectedUserChange} onSave={saveUser}/>
+    handleNewUserButtonClick = () => {
+        this.setState({
+            ...this.state,
+            isNewUser: true,
+            selectedUser: NEW_USER
+        })
+    }
+
+    saveNewUser = (newUser) => {
+        userService.addUser(newUser).then(savedUser => {
+            console.log("Saved", savedUser)
+            this.setState({
+                ...this.state,
+                isNewUser: false,
+                selectedUser: savedUser,
+                users: [...this.state.users, savedUser]
+            })
+        })
+    }
+
+    updateUser = (userToUpdate) => {
+        userService.updateUser(userToUpdate).then(() => {
+            const updatedUsers = [...this.state.users]
+            updatedUsers[userToUpdate.id - 1] = userToUpdate
+            this.setState({
+                ...this.state,
+                users: updatedUsers
+            })
+        })
+    }
+
+    saveUser = (userToSave) => {
+        if (this.state.isNewUser) {
+            this.saveNewUser(userToSave)
+        } else {
+            this.updateUser(userToSave)
+        }
+    }
+
+    onSelectedUserChange = (selectedUser) => {
+        this.setState({
+            ...this.state,
+            selectedUser: selectedUser
+        })
+    }
+
+    render() {
+        return (
+            <div className="main-view-container container-fluid">
+                <div className="left-column">
+                    <div className="column-title">
+                        User List
+                    </div>
+                    <UserList users={this.state.users} onNewUser={this.handleNewUserButtonClick}
+                              onUserSelect={this.selectUser}/>
+                </div>
+                <div className="right-column">
+                    <div className="column-title">
+                        {this.state.isNewUser ? "New User" : "User Details"}
+                    </div>
+                    <UserDetails user={this.state.selectedUser} onChange={this.onSelectedUserChange}
+                                 onSave={this.saveUser}/>
+                </div>
             </div>
-        </div>
-    );
+        )
+    }
 };
 
 export default MainView;

@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import _ from 'lodash'
+import fuzzy from "fuzzy";
 import UserList from "../UserList/UserList";
 import "./MainView.scss"
 import UserDetails from "../UserDetails/UserDetails";
 import userService from "../../services/userService";
-
 
 const NEW_USER = {
     name: '',
@@ -19,8 +19,21 @@ class MainView extends Component {
         this.state = {
             users: [],
             selectedUser: NEW_USER,
-            isNewUser: true
+            isNewUser: true,
+            filterPattern: '',
         }
+    }
+
+    filteredUsers = () => {
+        return fuzzy
+            .filter(
+                this.state.filterPattern,
+                this.state.users,
+                {
+                    extract: (el) => el.name
+                }
+            )
+            .map((item) => item.original)
     }
 
     componentWillMount() {
@@ -87,6 +100,13 @@ class MainView extends Component {
         })
     }
 
+    onFilterPatternChange = (pattern) => {
+        this.setState({
+            ...this.state,
+            filterPattern: pattern
+        })
+    }
+
     render() {
         return (
             <div className="main-view-container container-fluid">
@@ -94,8 +114,9 @@ class MainView extends Component {
                     <div className="column-title">
                         User List
                     </div>
-                    <UserList users={this.state.users} onNewUser={this.handleNewUserButtonClick}
-                              onUserSelect={this.selectUser}/>
+                    <UserList users={this.filteredUsers()} onNewUser={this.handleNewUserButtonClick}
+                              onUserSelect={this.selectUser} filterPattern={this.state.filterPattern}
+                              onFilterPatternChange={this.onFilterPatternChange}/>
                 </div>
                 <div className="right-column">
                     <div className="column-title">

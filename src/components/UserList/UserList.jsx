@@ -3,6 +3,9 @@ import "./UserList.scss"
 
 const UserList = (props) => {
 
+    const handleFilterPatternChange = (e)=>{
+        props.onFilterPatternChange(e.target.value)
+    }
     return (
         <div className="list-group list-group-flush">
             <div className="list-group-item">
@@ -11,7 +14,7 @@ const UserList = (props) => {
                         New user
                     </div>
                     <input type="text" className="form-control user-search-box" placeholder="Find user..."
-                           aria-label="Find user..."/>
+                           aria-label="Find user..." value={props.filterPattern} onChange={handleFilterPatternChange}/>
                 </div>
             </div>
             {props.users && props.users.map((u) =>

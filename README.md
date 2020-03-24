@@ -3,7 +3,7 @@ This project is a React application providing basic user management functionalit
 
 It was developed as an example frontend application for aws deployment practice.
 
-
+![React User Manager Screen](./public/screen.png)
 
 ## Available Scripts
 

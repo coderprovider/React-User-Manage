@@ -1,24 +1,28 @@
 .main-view-container {
-  margin: 2%;
+  margin: 2% 0 2%;
   display: flex;
   flex: 1 1 auto;
   flex-direction: row;
   height: 100%;
+  width: 100%;
+  max-width: 100%;
 }
 
 .left-column {
-  flex: 0 1 48%;
+  flex: 0 1 50%;
   justify-content: center;
   align-items: center;
   border: 1px solid #61dafb;
+  margin-left: 3%;
 }
 
 .right-column {
-  flex: 0 1 48%;
+  flex: 0 1 50%;
   justify-content: center;
   align-items: center;
   border: 1px solid #61dafb;
   border-left-width: 0;
+  margin-right: 3%;
 }
 
 .column-title {

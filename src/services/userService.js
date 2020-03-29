@@ -1,10 +1,8 @@
 // For now users are stored in the array. Will be changed for the backend communication later
 import axios from 'axios'
 
-const SERVER_ADDRESS = 'http://localhost:8080'
-
 const fetchUsers = () => {
-    return axios.get(SERVER_ADDRESS + '/users')
+    return axios.get(process.env.REACT_APP_API_URL + '/users')
         .then(res => {
             console.log(res.data)
             return res.data
@@ -12,14 +10,14 @@ const fetchUsers = () => {
 }
 
 const addUser = (newUser) => {
-    return axios.post(SERVER_ADDRESS + '/users', newUser).then(res => {
+    return axios.post(process.env.REACT_APP_API_URL + '/users', newUser).then(res => {
         console.log(res.data)
         return res.data
     })
 }
 
 const updateUser = (userToUpdate) => {
-    return axios.post(SERVER_ADDRESS + '/users/' + userToUpdate.id, userToUpdate).then(res => {
+    return axios.post(process.env.REACT_APP_API_URL + '/users/' + userToUpdate.id, userToUpdate).then(res => {
         console.log(res.data)
         return res.data
     })

@@ -16,16 +16,23 @@ npm run build
 printf "\n"
 printf "Adding key to keychain\n"
 ssh-add -k "${private_key}"
+
 printf "Creating working directory on Bastion Host\n"
 ssh -A ec2-user@"${bastion_address}" "mkdir -p ~/workdir/usermanager"
+
 printf "Copying project files to Bastion Host\n"
 rsync -av -e ssh --exclude='node_modules' ./ ec2-user@"${bastion_address}":~/workdir/usermanager
+
 printf "Creating working directory on private instance\n"
-ssh -A ec2-user@"${bastion_address}" "ssh ec2-user@${instance_address} 'mkdir -p ~/workdir/usermanager'"
+ssh -A ec2-user@"${bastion_address}" "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ec2-user@${instance_address} 'mkdir -p ~/workdir/usermanager'"
+
 printf "Copying project files to private instance\n"
-ssh -A ec2-user@"${bastion_address}" "scp -r ~/workdir/usermanager/ ec2-user@${instance_address}:~/workdir"
+ssh -A ec2-user@"${bastion_address}" "scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r ~/workdir/usermanager/ ec2-user@${instance_address}:~/workdir"
+
 printf "Stopping process running on port 5000 if exists\n"
-ssh -A ec2-user@"${bastion_address}" "ssh ec2-user@${instance_address} 'sudo fuser -k 5000/tcp'"
+ssh -A ec2-user@"${bastion_address}" "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ec2-user@${instance_address} 'sudo fuser -k 5000/tcp'"
+
 printf "Running the application\n"
-ssh -A ec2-user@"${bastion_address}" "ssh ec2-user@${instance_address} 'cd ~/workdir/usermanager && npx serve -s -n build'"
+ssh -A ec2-user@"${bastion_address}" "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ec2-user@${instance_address} 'cd ~/workdir/usermanager && npx serve -s -n build'"
+
 printf "Exit"

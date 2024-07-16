@@ -5,6 +5,8 @@ import "./UserDetails.scss"
 const UserDetails = (props) => {
 
     const updateName = (e) => {
+
+        // props.onChange({...props.user, name: e.target.value})
         props.onChange({...props.user, name: e.target.value})
     }
 

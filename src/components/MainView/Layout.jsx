@@ -20,16 +20,16 @@ class MainView extends Component {
             users: [],
             selectedUser: NEW_USER,
             isNewUser: true,
-            filterPattern: '',  
+            filterPattern: '',
         }
     }
 
-    filteredUsers = () => { 
+    filteredUsers = () => {
         return fuzzy
             .filter(
-                this.state.filterPattern,   
+                this.state.filterPattern,
                 this.state.users,
-                {   
+                {
                     extract: (el) => el.name
                 }
             )
@@ -37,7 +37,7 @@ class MainView extends Component {
     }
 
     componentWillMount() {
-        console.log('Will mount')   
+        console.log('Will mount')
         userService.fetchUsers().then((users) => {
             this.setState({
                 ...this.state,
@@ -46,7 +46,7 @@ class MainView extends Component {
         })
     }
 
-    selectUser = (userId) => {  
+    selectUser = (userId) => {
         this.setState({
             ...this.state,
             isNewUser: false,
@@ -54,7 +54,7 @@ class MainView extends Component {
         })
     }
 
-    handleNewUserButtonClick = () => {  
+    handleNewUserButtonClick = () => {
         this.setState({
             ...this.state,
             isNewUser: true,
@@ -68,7 +68,7 @@ class MainView extends Component {
             this.setState({
                 ...this.state,
                 isNewUser: false,
-                selectedUser: savedUser,    
+                selectedUser: savedUser,
                 users: [...this.state.users, savedUser]
             })
         })

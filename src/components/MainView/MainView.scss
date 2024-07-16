@@ -1,5 +1,5 @@
 .main-view-container {
-  margin: 2% 0 2%;
+  margin: 3% 0 3%;
   display: flex;
   flex: 1 1 auto;
   flex-direction: row;
@@ -13,7 +13,8 @@
   justify-content: center;
   align-items: center;
   border: 1px solid #61dafb;
-  margin-left: 3%;
+  margin-left: 5%;
+
 }
 
 .right-column {
@@ -22,12 +23,12 @@
   align-items: center;
   border: 1px solid #61dafb;
   border-left-width: 0;
-  margin-right: 3%;
+  margin-right: 5%;
 }
 
 .column-title {
   font-size: large;
   font-weight: 700;
   border-bottom: 1px solid #61dafb;
-  height: 30px;
+  height: 40px;
 }

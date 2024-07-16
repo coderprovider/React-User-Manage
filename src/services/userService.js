@@ -21,7 +21,6 @@ const updateUser = (userToUpdate) => {
     })
 }
 
-
 export default {
     fetchUsers,
     addUser,

@@ -12,7 +12,6 @@
 .App-header {
   background-color: #282c34;
   min-height: 10vh;
-  // max-height: 30vh; 
   flex: 0 1 auto;
   display: flex;
   flex-direction: row; 
@@ -28,7 +27,6 @@
 
 @keyframes App-logo-spin {
   from {
-    // transform: rotate(8deg);
     transform: rotate(0deg);
   }
   to {

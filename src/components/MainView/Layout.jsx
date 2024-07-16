@@ -8,13 +8,13 @@ import userService from "../../services/userService";
 
 const NEW_USER = {
     name: '',
-    email: '',
-    password: '',
+    email: '',  
+    password: '',   
     address: {street: '', zipCode: '', city: '', country: ''}
 }
 
 class MainView extends Component {
-    constructor(props) {
+    constructor(props) {    
         super(props);
         this.state = {
             users: [],

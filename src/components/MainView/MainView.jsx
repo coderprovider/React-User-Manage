@@ -66,10 +66,10 @@ class MainView extends Component {
         userService.addUser(newUser).then(savedUser => {
             console.log("Saved", savedUser)
             this.setState({
-                ...this.state,
+                ...this.state,  
                 isNewUser: false,
                 selectedUser: savedUser,    
-                users: [...this.state.users, savedUser]
+                users: [...this.state.users, savedUser] 
             })
         })
     }

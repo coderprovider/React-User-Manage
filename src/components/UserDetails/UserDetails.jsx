@@ -28,7 +28,7 @@ const UserDetails = (props) => {
 
     const updateCity = (e) => {
         props.onChange({...props.user, address: {...props.user.address, "city": e.target.value}})
-    }
+    }   
 
     const updateCountry = (e) => {
         props.onChange({...props.user, address: {...props.user.address, "country": e.target.value}})

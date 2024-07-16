@@ -11,6 +11,7 @@ const Header = () => {
                 React User Manager
             </div>
             <img src={logo} className="App-logo" alt="logo"/>
+            {/* <img src={side_logo} className="App-logo" alt="logo"/> */}
         </header>
     )
 }

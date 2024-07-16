@@ -107,6 +107,18 @@ class MainView extends Component {
         })
     }
 
+    // uploadImg = (newUser) => {
+    //     userService.addUser(newUser).then(savedUser => {
+    //         console.log("Saved", savedUser)
+    //         this.setState({
+    //             ...this.state,  
+    //             isNewUser: false,
+    //             selectedUser: savedUser,    
+    //             users: [...this.state.users, savedUser] 
+    //         })
+    //     })
+    // }
+
     render() {
         return (
             <div className="main-view-container container-fluid">

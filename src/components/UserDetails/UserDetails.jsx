@@ -34,6 +34,10 @@ const UserDetails = (props) => {
         props.onChange({...props.user, address: {...props.user.address, "country": e.target.value}})
     }
 
+    // const updateProfile = (e) => {
+    //     props.onChange({...props.user, address: {...props.user.address, "city": e.target.value}})
+    // }  
+
     const saveUserDetails = (e) => {
         e.preventDefault()
         props.onSave(props.user)

@@ -7,9 +7,7 @@ const Header = () => {
     <header className="App-header">
       <img src={logo} className="App-logo" alt="logo" />
       <div className="appTitle">
-        <div className="flex text-center">
-            React User Manager
-        </div>
+        <div className="flex text-center">React User Manager</div>
       </div>
       <img src={logo} className="App-logo" alt="logo" />
     </header>
